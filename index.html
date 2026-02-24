@@ -1,1 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SportsVille · blue & white excellence</title>
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      color: #1e293b;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Blue & white palette + gold accent */
+    :root {
+      --blue-deep: #0a2f6c;      /* deep navy-blue */
+      --blue-bright: #1e4f8a;    /* vibrant blue */
+      --blue-sky: #e6f0ff;       /* very light blue for backgrounds */
+      --white: #ffffff;
+      --off-white: #f8fafc;
+      --gold: #fbbf24;           /* warm gold */
+      --gold-dark: #eab308;
+      --charcoal: #1e293b;
+      --shadow-sm: 0 10px 25px -5px rgba(10, 47, 108, 0.08), 0 4px 10px -6px rgba(0,0,0,0.02);
+      --shadow-hover: 0 30px 45px -15px rgba(10, 47, 108, 0.2);
+      --radius-card: 32px;
+      --radius-btn: 40px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    section {
+      padding: 110px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 36px;
+      border-radius: var(--radius-btn);
+      transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--blue-deep);
+    }
+    .btn-primary:hover {
+      background: var(--gold-dark);
+      transform: scale(1.02) translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .btn-outline {
+      background: var(--white);
+      color: var(--blue-deep);
+      border: 2px solid var(--blue-deep);
+    }
+    .btn-outline:hover {
+      background: var(--blue-deep);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(10,47,108,0.05);
+      padding: 14px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s;
+    }
+
+    .logo img {
+      height: 54px;
+      width: auto;
+      border-radius: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 40px;
+    }
+    .nav-center a {
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--blue-deep);
+      font-size: 1.05rem;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+      transition: 0.2s;
+    }
+    .nav-center a:hover {
+      border-bottom-color: var(--gold);
+      color: var(--blue-bright);
+      transform: translateY(-1px);
+    }
+
+    .header-right .btn {
+      padding: 12px 30px;
+      background: var(--blue-deep);
+      color: white;
+      box-shadow: none;
+    }
+    .header-right .btn:hover {
+      background: #0a3d7a;
+    }
+
+    /* mobile */
+    .hamburger {
+      display: none;
+      font-size: 30px;
+      background: none;
+      border: none;
+      color: var(--blue-deep);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .hamburger:hover { transform: scale(1.1); }
+    .mobile-nav {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      background: white;
+      padding: 30px;
+      border-radius: 40px;
+      margin-top: 20px;
+      box-shadow: var(--shadow-sm);
+      gap: 20px;
+      text-align: center;
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .mobile-nav a {
+      text-decoration: none;
+      color: var(--blue-deep);
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(120deg, #0a2f6c 0%, #1e4f8a 100%);
+      min-height: 85vh;
+      border-radius: 0 0 60px 60px;
+      display: flex;
+      align-items: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1530543787849-128d94430c6b?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      opacity: 0.2;
+      mix-blend-mode: overlay;
+      animation: slowZoom 20s infinite alternate;
+    }
+    @keyframes slowZoom {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+    .hero-content {
+      position: relative;
+      max-width: 750px;
+      z-index: 2;
+      animation: fadeUp 1s ease-out;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1 {
+      font-size: clamp(4rem, 10vw, 6rem);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .hero p {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      opacity: 0.95;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* ABOUT */
+    .about-text {
+      font-size: 1.3rem;
+      max-width: 1000px;
+      background: var(--blue-sky);
+      padding: 50px;
+      border-radius: 60px;
+      color: var(--blue-deep);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* SPORTS CARDS */
+    .section-title {
+      font-size: 3.5rem;
+      color: var(--blue-deep);
+      margin-bottom: 30px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    .sport-card {
+      background: white;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+      text-decoration: none;
+      color: inherit;
+    }
+    .sport-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: var(--shadow-hover);
+    }
+    .card-img {
+      height: 210px;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s;
+    }
+    .sport-card:hover .card-img {
+      transform: scale(1.05);
+    }
+    .card-content {
+      padding: 25px 22px 32px;
+    }
+    .card-content h3 {
+      font-size: 1.9rem;
+      color: var(--blue-deep);
+      margin-bottom: 12px;
+    }
+    .card-content p {
+      color: #334155;
+      margin-bottom: 24px;
+    }
+    .learn-more {
+      font-weight: 700;
+      color: var(--blue-bright);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .learn-more i { transition: transform 0.3s; }
+    .sport-card:hover .learn-more i { transform: translateX(8px); }
+
+    /* COURTS DETAILS (no buttons now) */
+    .court-block {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 100px;
+      background: var(--off-white);
+      border-radius: 60px;
+      padding: 50px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s;
+    }
+    .court-block:hover {
+      box-shadow: var(--shadow-hover);
+    }
+    .court-block.reverse {
+      flex-direction: row-reverse;
+      background: var(--white);
+    }
+    .court-img {
+      flex: 1;
+      height: 400px;
+      border-radius: 40px;
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.5s;
+    }
+    .court-block:hover .court-img {
+      transform: scale(1.01);
+    }
+    .court-detail {
+      flex: 1;
+    }
+    .court-detail h2 {
+      font-size: 3rem;
+      color: var(--blue-deep);
+      margin-bottom: 20px;
+    }
+    .court-detail ul {
+      list-style: none;
+      margin: 30px 0;
+    }
+    .court-detail li {
+      padding: 10px 0 10px 35px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="%23fbbf24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>') left center no-repeat;
+      background-size: 22px;
+      font-weight: 500;
+    }
+    /* BUTTON REMOVED — as requested */
+
+    /* ACADEMIES */
+    .academy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .academy-card {
+      background: white;
+      border-radius: 50px;
+      padding: 45px;
+      box-shadow: var(--shadow-sm);
+      border-left: 8px solid var(--gold);
+      transition: all 0.3s;
+    }
+    .academy-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .academy-card h3 {
+      font-size: 2.2rem;
+      color: var(--blue-deep);
+      margin-bottom: 20px;
+    }
+
+    /* EVENTS TABS */
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      font-weight: 700;
+      padding: 14px 36px;
+      border-radius: 60px;
+      cursor: pointer;
+      color: var(--blue-deep);
+      background: var(--off-white);
+      transition: all 0.2s;
+    }
+    .tab-btn:hover {
+      background: var(--blue-sky);
+      transform: translateY(-2px);
+    }
+    .tab-btn.active {
+      background: var(--blue-deep);
+      color: white;
+    }
+    .tab-panel {
+      display: none;
+      background: white;
+      padding: 60px;
+      border-radius: 60px;
+      box-shadow: var(--shadow-sm);
+      animation: fadeIn 0.5s;
+    }
+    .tab-panel.active-panel {
+      display: block;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* PRESS */
+    .press-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .press-card {
+      background: var(--blue-deep);
+      color: white;
+      border-radius: 50px;
+      padding: 50px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s;
+    }
+    .press-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .press-card h3 {
+      font-size: 2.4rem;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    /* GALLERY */
+    .filter-btns {
+      display: flex;
+      gap: 16px;
+      margin: 40px 0;
+    }
+    .filter-btn {
+      background: white;
+      border: 2px solid var(--blue-deep);
+      border-radius: 50px;
+      padding: 10px 30px;
+      font-weight: 600;
+      color: var(--blue-deep);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      background: var(--blue-sky);
+      transform: scale(1.05);
+    }
+    .filter-btn.active-filter {
+      background: var(--blue-deep);
+      color: white;
+    }
+    .gallery-grid {
+      column-count: 4;
+      column-gap: 24px;
+    }
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 24px;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s;
+      cursor: pointer;
+      background: #eef2f6;
+    }
+    .gallery-item:hover {
+      transform: scale(0.97) translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+    .gallery-item .gal-img {
+      width: 100%;
+      height: auto;
+      background-size: cover;
+      background-position: center;
+      aspect-ratio: 1/1.1;
+      transition: transform 0.5s;
+    }
+    .gallery-item:hover .gal-img {
+      transform: scale(1.05);
+    }
+    /* lightbox */
+    .lightbox {
+      position: fixed;
+      top:0;left:0;width:100%;height:100%;
+      background: rgba(10,47,108,0.9);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: lightboxFade 0.3s;
+    }
+    @keyframes lightboxFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .lightbox img {
+      max-width: 85vw;
+      max-height: 85vh;
+      border-radius: 40px;
+      border: 5px solid white;
+      animation: zoomIn 0.3s;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .close-lightbox {
+      position: absolute;
+      top: 40px; right: 60px;
+      font-size: 50px;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* CONTACT */
+    .contact-block {
+      display: flex;
+      gap: 50px;
+      background: var(--blue-sky);
+      border-radius: 70px;
+      padding: 70px;
+      transition: all 0.3s;
+    }
+    .contact-block:hover {
+      box-shadow: var(--shadow-hover);
+    }
+    .contact-info {
+      flex:1;
+    }
+    .contact-info h3 {
+      font-size: 2rem;
+      color: var(--blue-deep);
+      margin: 30px 0 10px;
+    }
+    .contact-info p {
+      font-size: 1.3rem;
+    }
+    .map-placeholder {
+      flex:1;
+      background: #cbd5e1;
+      border-radius: 50px;
+      background-image: url('https://images.unsplash.com/photo-1577086664693-894d8405334a?q=80&w=1974&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      box-shadow: var(--shadow-sm);
+      min-height: 300px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--blue-deep);
+      color: white;
+      border-radius: 60px 60px 0 0;
+      padding: 60px 40px 30px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1.5fr;
+      gap: 60px;
+    }
+    .footer-logo img {
+      height: 60px;
+      background: white;
+      border-radius: 20px;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+    .social-icons a {
+      color: white;
+      font-size: 36px;
+      margin-right: 25px;
+      transition: color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .social-icons a:hover {
+      color: var(--gold);
+      transform: translateY(-4px) scale(1.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .nav-center { display: none; }
+      .hamburger { display: block; }
+      .header-right .btn { display: none; }
+      .mobile-nav.show { display: flex; }
+      .court-block { flex-direction: column; }
+      .court-block.reverse { flex-direction: column; }
+      .gallery-grid { column-count: 3; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      section { padding: 70px 0; }
+      .hero h1 { font-size: 3.5rem; }
+      .gallery-grid { column-count: 2; }
+      .academy-grid { grid-template-columns: 1fr; }
+      .press-grid { grid-template-columns: 1fr; }
+      .contact-block { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { column-count: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="image1.png" alt="SportsVille">
+    </div>
+    <nav class="nav-center">
+      <a href="#home">Home</a>
+      <a href="#courts">Courts</a>
+      <a href="#academies">Academies</a>
+      <a href="#events">Events</a>
+      <a href="#press">Press</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-right">
+      <a href="#contact" class="btn">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#home" onclick="toggleMobile()">Home</a>
+      <a href="#courts" onclick="toggleMobile()">Courts</a>
+      <a href="#academies" onclick="toggleMobile()">Academies</a>
+      <a href="#events" onclick="toggleMobile()">Events</a>
+      <a href="#press" onclick="toggleMobile()">Press</a>
+      <a href="#gallery" onclick="toggleMobile()">Gallery</a>
+      <a href="#contact" onclick="toggleMobile()">Contact</a>
+      <a href="#contact" class="btn btn-primary" style="margin-top:15px;">Book Now</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME -->
+    <section id="home">
+      <div class="hero">
+        <div class="container hero-content">
+          <h1>Sports For All</h1>
+          <p>Professional courts. Elite coaching. Unmatched experience in the heart of Beirut.</p>
+          <div class="hero-buttons">
+            <a href="#courts" class="btn btn-primary">Book a Court</a>
+            <a href="#academies" class="btn btn-outline">Explore Activities</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="container" style="margin-top: 80px;">
+        <h2 class="section-title">About SportsVille</h2>
+        <div class="about-text">
+          <p>SportsVille is a premier multi-sport complex located in the heart of Beirut. Designed for athletes of all ages and skill levels, our facility combines professional-grade courts, expert coaching, and a welcoming community atmosphere. Whether you are training competitively, playing for fun, or enrolling your child in an academy program, SportsVille provides a safe, modern, and inspiring environment where everyone can grow and perform at their best. We believe sport builds discipline, confidence, teamwork, and lifelong healthy habits. At SportsVille, sport is not just an activity — it is a lifestyle.</p>
+        </div>
+      </div>
+
+      <!-- SPORTS OFFERED cards -->
+      <div class="container">
+        <h2 class="section-title">Sports offered</h2>
+        <div class="card-grid">
+          <a href="#football-court" class="sport-card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=2070&auto=format&fit=crop');"></div>
+            <div class="card-content">
+              <h3>Football</h3>
+              <p>Professional indoor and outdoor football courts with shock-absorbing turf and optimal grip.</p>
+              <span class="learn-more">Learn More <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </a>
+          <a href="#basketball-court" class="sport-card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=1974&auto=format&fit=crop');"></div>
+            <div class="card-content">
+              <h3>Basketball</h3>
+              <p>Professional hardwood courts with advanced flooring for competitive play and training.</p>
+              <span class="learn-more">Learn More <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </a>
+          <a href="#volleyball-court" class="sport-card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1526979171196-0fa6f4f8b6c9?q=80&w=2070&auto=format&fit=crop');"></div>
+            <div class="card-content">
+              <h3>Volleyball</h3>
+              <p>Outdoor and indoor courts with advanced surface technology ensuring safety and ball response.</p>
+              <span class="learn-more">Learn More <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </a>
+          <a href="#pingpong-court" class="sport-card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1622279457486-28f5f62f5c0b?q=80&w=2070&auto=format&fit=crop');"></div>
+            <div class="card-content">
+              <h3>Ping Pong</h3>
+              <p>Fast-paced outdoor and indoor tables for recreational and competitive matches.</p>
+              <span class="learn-more">Learn More <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </a>
+          <a href="#badminton-court" class="sport-card">
+            <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?q=80&w=1974&auto=format&fit=crop');"></div>
+            <div class="card-content">
+              <h3>Badminton</h3>
+              <p>Dedicated courts designed for speed, agility, and precision. Fully functional link.</p>
+              <span class="learn-more">Learn More <i class="fas fa-arrow-right"></i></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COURTS detailed (buttons removed, volleyball/pingpong images updated) -->
+    <section id="courts" class="container">
+      <h2 class="section-title">Courts</h2>
+      <div id="football-court" class="court-block">
+        <div class="court-img" style="background-image: url('https://images.unsplash.com/photo-1529900748604-07564a03e71a?q=80&w=2070&auto=format&fit=crop');"></div>
+        <div class="court-detail">
+          <h2>FOOTBALL COURTS</h2>
+          <p>Our multi-purpose football pitches are built to professional standards, offering optimal shock absorption, durability, and player safety. Whether you are playing a friendly match or participating in competitive training, our courts provide the ideal environment for performance.</p>
+          <ul><li>Premium turf technology</li><li>Professional lighting</li><li>Safe indoor environment</li><li>Suitable for all ages</li></ul>
+          <!-- Reserve button removed -->
+        </div>
+      </div>
+      <div id="basketball-court" class="court-block reverse">
+        <div class="court-img" style="background-image: url('https://images.unsplash.com/photo-1484482340112-e1e2682b4856?q=80&w=1974&auto=format&fit=crop');"></div>
+        <div class="court-detail">
+          <h2>BASKETBALL COURTS</h2>
+          <p>Professional hardwood courts with NBA‑grade backboards. Ideal for leagues, training, and pick‑up games.</p>
+          <ul><li>Maplewood flooring</li><li>Adjustable hoops</li><li>Shot clocks available</li><li>Viewing gallery</li></ul>
+          <!-- Reserve button removed -->
+        </div>
+      </div>
+      <div id="volleyball-court" class="court-block">
+        <!-- new outdoor volleyball image -->
+        <div class="court-img" style="background-image: url('https://images.unsplash.com/photo-1526979171196-0fa6f4f8b6c9?q=80&w=2070&auto=format&fit=crop');"></div>
+        <div class="court-detail">
+          <h2>VOLLEYBALL COURTS</h2>
+          <p>Our beach-style outdoor courts and indoor high-performance facilities provide the perfect setting for casual play or competitive tournaments. Enjoy the sun or play under the lights.</p>
+          <ul><li>FIVB regulation nets</li><li>Beach sand or wooden flooring</li><li>Tournament lighting</li></ul>
+          <!-- Reserve button removed -->
+        </div>
+      </div>
+      <div id="pingpong-court" class="court-block reverse">
+        <!-- new outdoor ping pong image -->
+        <div class="court-img" style="background-image: url('https://images.unsplash.com/photo-1622279457486-28f5f62f5c0b?q=80&w=2070&auto=format&fit=crop');"></div>
+        <div class="court-detail">
+          <h2>PING PONG</h2>
+          <p>Outdoor and indoor competition‑grade tables with spacious layout. Balls and paddles available. Perfect for a friendly game in the fresh air.</p>
+          <ul><li>ITTF approved tables</li><li>Weather-resistant options</li><li>Professional barriers</li></ul>
+          <!-- Reserve button removed -->
+        </div>
+      </div>
+      <div id="badminton-court" class="court-block">
+        <div class="court-img" style="background-image: url('https://images.unsplash.com/photo-1613919113640-257a1857fa2a?q=80&w=2070&auto=format&fit=crop');"></div>
+        <div class="court-detail">
+          <h2>BADMINTON COURTS</h2>
+          <p>Five dedicated courts with matte flooring and precise lighting for competitive speed.</p>
+          <ul><li>BWF standard nets</li><li>Non‑glare LED</li><li>Courtside seating</li></ul>
+          <!-- Reserve button removed -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ACADEMIES -->
+    <section id="academies" style="background: var(--blue-sky);">
+      <div class="container">
+        <h2 class="section-title">Academies</h2>
+        <div class="academy-grid">
+          <div class="academy-card">
+            <h3>FOOTBALL ACADEMY</h3>
+            <p>The Advanced Soccer Academy (ASA) is designed to develop young talent through structured training programs led by certified coaches. Our curriculum focuses on technique, tactical awareness, physical conditioning, and teamwork.</p>
+            <button class="btn btn-primary" style="margin-top:30px;">Learn More</button>
+          </div>
+          <div class="academy-card">
+            <h3>BASKETBALL ACADEMY</h3>
+            <p>The Never-Too-Late Basketball Academy helps players refine their technical skills, build strength, and improve court intelligence. Our coaching team includes experienced professionals dedicated to athlete development.</p>
+            <button class="btn btn-primary" style="margin-top:30px;">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTS tabs -->
+    <section id="events">
+      <div class="container">
+        <h2 class="section-title">Events</h2>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="summer">Summer Camps</button>
+          <button class="tab-btn" data-tab="tournaments">Tournaments</button>
+          <button class="tab-btn" data-tab="birthday">Birthday Parties</button>
+        </div>
+        <div id="summer" class="tab-panel active-panel">
+          <h2 style="font-size:3rem; color:var(--blue-deep);">☀️ Summer Camps</h2>
+          <p style="font-size:1.4rem;">Our summer camps are designed to nurture young athletes through structured training sessions, fitness activities, and teamwork development. Children improve their skills while building friendships and confidence.</p>
+        </div>
+        <div id="tournaments" class="tab-panel">
+          <h2 style="font-size:3rem; color:var(--blue-deep);">🏆 Tournaments</h2>
+          <p style="font-size:1.4rem;">SportsVille hosts organized tournaments throughout the year, offering healthy competition and unforgettable sporting experiences.</p>
+        </div>
+        <div id="birthday" class="tab-panel">
+          <h2 style="font-size:3rem; color:var(--blue-deep);">🎉 Birthday Parties</h2>
+          <p style="font-size:1.4rem;">Celebrate your child’s birthday with a sports-themed party experience. Choose from football or basketball packages, including supervised games, activities, and access to our facilities.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRESS (no latest news) -->
+    <section id="press">
+      <div class="container press-grid">
+        <div class="press-card"><h3>News & Updates</h3><p>SportsVille regularly shares updates about events, tournaments, academy programs, and community initiatives. Stay connected for upcoming leagues and facility enhancements.</p></div>
+        <div class="press-card"><h3>Health Tips</h3><p>Stay at peak performance with expert advice on hydration, nutrition, recovery, and injury prevention. We promote healthy athletic habits for all ages.</p></div>
+      </div>
+    </section>
+
+    <!-- GALLERY with filters & lightbox -->
+    <section id="gallery">
+      <div class="container">
+        <h2 class="section-title">Moments at SportsVille</h2>
+        <div class="filter-btns">
+          <button class="filter-btn active-filter" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="general">General</button>
+          <button class="filter-btn" data-filter="birthdays">Birthdays</button>
+          <button class="filter-btn" data-filter="camps">Summer Camps</button>
+        </div>
+        <div class="gallery-grid" id="galleryGrid">
+          <!-- Assign categories: 2-6 general, 7-11 birthdays, 12-16 camps -->
+          <div class="gallery-item" data-category="general"><div class="gal-img" style="background-image: url('image2.png'); aspect-ratio:1/1.2;"></div></div>
+          <div class="gallery-item" data-category="general"><div class="gal-img" style="background-image: url('image3.png'); aspect-ratio:1.1/1;"></div></div>
+          <div class="gallery-item" data-category="general"><div class="gal-img" style="background-image: url('image4.png'); aspect-ratio:1/1;"></div></div>
+          <div class="gallery-item" data-category="general"><div class="gal-img" style="background-image: url('image5.png'); aspect-ratio:1/1.3;"></div></div>
+          <div class="gallery-item" data-category="general"><div class="gal-img" style="background-image: url('image6.png'); aspect-ratio:1.2/1;"></div></div>
+          <div class="gallery-item" data-category="birthdays"><div class="gal-img" style="background-image: url('image7.png'); aspect-ratio:1/1.1;"></div></div>
+          <div class="gallery-item" data-category="birthdays"><div class="gal-img" style="background-image: url('image8.png'); aspect-ratio:1/1;"></div></div>
+          <div class="gallery-item" data-category="birthdays"><div class="gal-img" style="background-image: url('image9.png'); aspect-ratio:1/1.2;"></div></div>
+          <div class="gallery-item" data-category="birthdays"><div class="gal-img" style="background-image: url('image10.png'); aspect-ratio:1.3/1;"></div></div>
+          <div class="gallery-item" data-category="birthdays"><div class="gal-img" style="background-image: url('image11.png'); aspect-ratio:1/1;"></div></div>
+          <div class="gallery-item" data-category="camps"><div class="gal-img" style="background-image: url('image12.png'); aspect-ratio:1/1.2;"></div></div>
+          <div class="gallery-item" data-category="camps"><div class="gal-img" style="background-image: url('image13.png'); aspect-ratio:1.2/1;"></div></div>
+          <div class="gallery-item" data-category="camps"><div class="gal-img" style="background-image: url('image14.png'); aspect-ratio:1/1;"></div></div>
+          <div class="gallery-item" data-category="camps"><div class="gal-img" style="background-image: url('image15.png'); aspect-ratio:1/1.4;"></div></div>
+          <div class="gallery-item" data-category="camps"><div class="gal-img" style="background-image: url('image16.png'); aspect-ratio:1.1/1;"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT no forms -->
+    <section id="contact">
+      <div class="container contact-block">
+        <div class="contact-info">
+          <h2 style="font-size:3.5rem; color:var(--blue-deep);">Contact</h2>
+          <h3>📍 Address</h3>
+          <p>Sakyet el Janzeer, Berlin Street, Beirut, Lebanon</p>
+          <h3>📞 Phone</h3>
+          <p>01 781 481</p>
+          <h3>✉️ Email</h3>
+          <p>reservation@sportsville.me</p>
+        </div>
+        <div class="map-placeholder" title="Map location"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-logo">
+        <img src="image1.png" alt="SportsVille">
+        <p>SportsVille is Beirut’s leading multi-sport facility offering professional courts, academies, and events for all ages.</p>
+      </div>
+      <div><h4 style="color:var(--gold);">Quick Links</h4><ul style="list-style:none;"><li>Home</li><li>Courts</li><li>Academies</li><li>Events</li><li>Gallery</li></ul></div>
+      <div class="social-icons">
+        <h4 style="color:var(--gold);">Follow us</h4>
+        <a href="https://www.instagram.com/sportsvilleclub/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/SportsVille" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.tiktok.com/@sportsvilleclub" target="_blank"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox modal -->
+  <div id="lightbox" class="lightbox">
+    <span class="close-lightbox">&times;</span>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <script>
+    // mobile menu
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    hamburger.addEventListener('click', () => {
+      mobileNav.classList.toggle('show');
+    });
+    function toggleMobile() { mobileNav.classList.remove('show'); }
+
+    // events tabs
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        panels.forEach(p => p.classList.remove('active-panel'));
+        const target = btn.dataset.tab;
+        if (target === 'summer') document.getElementById('summer').classList.add('active-panel');
+        if (target === 'tournaments') document.getElementById('tournaments').classList.add('active-panel');
+        if (target === 'birthday') document.getElementById('birthday').classList.add('active-panel');
+      });
+    });
+
+    // gallery filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active-filter'));
+        btn.classList.add('active-filter');
+        const filter = btn.dataset.filter;
+        galleryItems.forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeLight = document.querySelector('.close-lightbox');
+    galleryItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const bg = item.querySelector('.gal-img').style.backgroundImage;
+        const match = bg.match(/url\(["']?([^"')]+)["']?\)/);
+        if (match && match[1]) {
+          lightboxImg.src = match[1];
+          lightbox.style.display = 'flex';
+        }
+      });
+    });
+    closeLight.addEventListener('click', () => { lightbox.style.display = 'none'; });
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.style.display = 'none'; });
+
+    // Scroll animation: reveal sections
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
